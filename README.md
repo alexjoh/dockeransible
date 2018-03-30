@@ -1,2 +1,3 @@
 # dockeransible
-Create Docker cluster after creating vms with vsphere_client module from ansible
+Create docker virtual machiens from VMware Vsphere using ansible vspher_client and build Create Docker cluster. Details explanation is in my blog site [Alexjoh Blog](https://alexjoh.blogspot.ca)
+
