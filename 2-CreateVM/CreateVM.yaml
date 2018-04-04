@@ -1,0 +1,38 @@
+``` yaml
+---
+- name: Create VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: createVM
+    vsphere_guest:
+      vcenter_hostname: vcenter_ip_address_or_name
+      validate_certs: no
+      username: vsphere_username
+      password: vsphere_password
+      guest: new_vm_name_must_unique
+      state: powered_off
+      vm_extra_config:
+        vcpu.hotadd: yes
+        mem.hotadd: yes
+        notes: This is a test VM for centos
+        folder: Docker
+      vm_disk:
+        disk1:
+          size_gb: 20
+          type: thin
+          datastore: PRD-NFS-01
+      vm_nic:
+        nic1:
+          type: vmxnet3
+          network: VM Network
+          network_type: standard
+      vm_hardware:
+        memory_mb: 2048
+        num_cpus: 2
+        osid: centos64Guest
+        scsi: paravirtual
+      esxi:
+        datacenter: vsphere_datacenter_name
+        hostname: vmware_esx_host_ip
+```
