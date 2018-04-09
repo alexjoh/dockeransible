@@ -1,0 +1,16 @@
+---
+- name: Create VM from Template and Display Infomation
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Retrieve Cloned VM
+    vsphere_guest:
+      vcenter_hostname: 10.200.0.11
+      validate_certs: no
+      username: administrator@vsphere.local
+      password: password
+      guest: centostemplate04
+      vmware_guest_facts: yes
+    register: clonedvm
+  - debug:
+      var: clonedvm 
