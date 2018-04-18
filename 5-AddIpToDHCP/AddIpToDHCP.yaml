@@ -1,0 +1,59 @@
+- name: Create VM from Template
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+  - name: createVM from Template
+    vsphere_guest:
+      vcenter_hostname: 10.200.0.11
+      validate_certs: no
+      username: administrator@vsphere.local
+      password: vsphere_password
+      guest: centostemplate04
+      from_template: yes
+      template_src: CentOSTemplate
+      cluster: FlairCluster
+      resource_pool: "/Resources/Docker"
+      vm_extra_config:
+        folder: Docker
+
+  - name: Retrieve Cloned VM
+    vsphere_guest:
+      vcenter_hostname: 10.200.0.11
+      validate_certs: no
+      username: administrator@vsphere.local
+      password: vsphere_password
+      guest: centostemplate04
+      vmware_guest_facts: yes
+    register: clonedvm
+
+  - name: Update DHCPD Entry
+    blockinfile:   
+      path: /etc/dhcp/dhcpd.conf
+      marker: ""
+      state: present
+      insertafter: EOF
+      block: |
+        host centostemplate04 {
+            option host-name "centostemplate04";
+            hardware ethernet {{ clonedvm.ansible_facts.hw_eth0.macaddress }};
+            fixed-address 10.200.0.151;
+        }
+        
+  - name: Restart DHCPD from ansible host
+    shell: 'sudo systemctl restart dhcpd'
+    sudo: yes
+    async: 30
+    poll: 0
+    ignore_errors: true
+
+  - name: Boot Cloned VM
+    vsphere_guest:
+      vcenter_hostname: 10.200.0.11
+      validate_certs: no
+      username: administrator@vsphere.local
+      password: vsphere_password
+      guest: centostemplate04
+      state: powered_on
+  - debug:
+      var: clonedvm 
