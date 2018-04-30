@@ -1,5 +1,15 @@
 # dockeransible
-Create docker virtual machiens from VMware Vsphere using ansible vspher_client and build Docker cluster. Details explanation is in my blog site [Alexjoh Blog](https://alexjoh.blogspot.ca) The goal of these script is building Prod, Test, and Dev environment, building docker cluster, and implemneting CI/CD using ansible for small team project. For repository, Artifactory OSS will be used. I've newbie on the Ansible and explained entire steps from the blog
+
+This repository is to automate all docker related tasks using Ansible tool. This will contains all scripts for my blog for Automation with Ansible series, (https://alexjoh.blogspot.ca). 
+
+The contents will be
+
+- Quick introduction of Ansible for beginner
+- Create VMs for Multi Environment
+- Create Docker Cluster
+- Create Default Docker service for micro services
+- Build and Deploy services for Spring Boot and Libraries to Docker Cluster
+- Build Private Docker Repository with Harbor
 
 ## Antomation with Ansible(1) - Install Ansible 2.4.3 on CentOS 7.4
 
