@@ -1,0 +1,80 @@
+---
+- hosts: all
+  pre_tasks:
+    - include_tasks: tasks/load-vars.yml
+  connection: local
+  become: yes
+  tasks:
+  - name: createVM from Template
+    vsphere_guest:
+      vcenter_hostname: "{{ vcenter_hostname }}"
+      validate_certs: "{{ vcenter_validate_certs }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      guest: "{{ inventory_hostname }}"
+      from_template: yes
+      template_src: "{{ vcenter_template }}"
+      cluster: "{{ vcenter_cluster }}"
+      resource_pool: "{{ vcenter_resource }}"
+      vm_extra_config:
+        folder: "{{ vcenter_vm_folder }}"
+  - name: Reconfigre network card
+    vsphere_guest:
+      vcenter_hostname: "{{ vcenter_hostname }}"
+      validate_certs: "{{ vcenter_validate_certs }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      guest: "{{ inventory_hostname }}"
+      state: reconfigured
+      vm_nic:
+        nic1:
+          type: vmxnet3
+          network: "{{ vcenter_vm_network }}"
+          network_type: standard  
+      esxi:
+        datacenter: FlairTest
+  - name: Retrieve Cloned VM
+    vsphere_guest:
+      vcenter_hostname: "{{ vcenter_hostname }}"
+      validate_certs: "{{ vcenter_validate_certs }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      guest: "{{ inventory_hostname }}"
+      vmware_guest_facts: yes
+    register: clonedvm
+  - name: Update DHCPD Entry
+    blockinfile:   
+      path: /etc/dhcp/dhcpd.conf
+      marker: ""
+      state: present
+      insertafter: EOF
+      block: |
+        host {{ inventory_hostname }} {
+            option host-name "{{ inventory_hostname }}";
+            ddns-hostname "{{ inventory_hostname }}";
+            hardware ethernet {{ clonedvm.ansible_facts.hw_eth0.macaddress }};
+            fixed-address {{ hostvars[inventory_hostname]['ipaddr'] }};
+        }
+  - name: Restart DHCPD from ansible host
+    become: yes
+    shell: 'systemctl restart dhcpd'
+    async: 30
+    poll: 0
+    ignore_errors: true
+
+  - name: Boot Cloned VM
+    vsphere_guest:
+      vcenter_hostname: "{{ vcenter_hostname }}"
+      validate_certs: "{{ vcenter_validate_certs }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      guest: "{{ inventory_hostname }}"
+      state: powered_on
+  - debug:
+      var: clonedvm 
+
+#  - name: "Set Hostname"
+#    shell: hostnamectl set-hostname {{ inventory_hostname }}
+#    become: yes
+    
+

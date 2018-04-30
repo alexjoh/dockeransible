@@ -1,0 +1,21 @@
+Folder PATH listing
+Volume serial number is D8A7-163B
+D:\GITREPO\GITHUB\DOCKERANSIBLE
+|   README.md
+|   tree.txt
+|   
++---2-CreateVM
+|       CreateVM.yaml
+|       
++---4-AnsibleDebug
+|       DisplayClonedVMInfo.yaml
+|       
++---5-AddIpToDHCP
+|       AddIpToDHCP.yaml
+|       
++---7-AccessInventoryVariable
+|       AccessInventoryVariable.md
+|       
+\---8-RunningRemoteCommand
+        RunningRemoteCommand.md
+        

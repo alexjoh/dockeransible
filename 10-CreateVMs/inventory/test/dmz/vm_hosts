@@ -1,0 +1,6 @@
+[docker-vms]
+dockerdmz01 ipaddr="10.201.0.150"
+dockerdmz02 ipaddr="10.201.0.151"
+dockerdmz03 ipaddr="10.201.0.152"
+dockerdmz04 ipaddr="10.201.0.153"
+dockerdmz05 ipaddr="10.201.0.154"

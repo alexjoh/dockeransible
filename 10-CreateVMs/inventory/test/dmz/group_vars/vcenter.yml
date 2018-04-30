@@ -1,0 +1,10 @@
+---
+vcenter_hostname: 10.200.0.11
+vcenter_validate_certs: no
+vcenter_username: administrator@vsphere.local
+vcenter_password: vcenter_password
+vcenter_template: CentOS_Template
+vcenter_cluster: VSphere_Cluster_Name
+vcenter_resource: /Resources
+vcenter_vm_folder: DockerDMZ
+vcenter_vm_network: Test-DMZ

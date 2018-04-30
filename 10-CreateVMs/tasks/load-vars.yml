@@ -1,0 +1,6 @@
+---
+- include_vars: "inventory/shared_vars/shared-secrets.yml"
+- include_vars: "inventory/shared_vars/shared-vars.yml"
+- include_vars: "{{ inventory_dir }}/group_vars/secrets.yml"
+- include_vars: "{{ inventory_dir }}/group_vars/vcenter.yml"
+- include_vars: "{{ inventory_dir }}/group_vars/docker.yml"
