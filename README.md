@@ -49,3 +49,20 @@ Before writing full script, I need to learn how to read variables from host file
 I need to run commands from remote and due to the password prompts, there was a challenge on it. To do this, "pexpect" module should be installed on the remote target computer and we will use "expect" and "responses" tag from ansible.
 
 [Automatoin with Ansible 8](https://alexjoh.blogspot.ca/2018/04/ansible-automation-run-execute-shell-command-remote-using-expect-responses.html)
+
+
+##  Ansible with automation(9) - Multi Environment Architecture
+
+This will demonstrate folder structure to support multi enviroment with two docker clusters for each environment.
+
+[Automatoin with Ansible 9](https://alexjoh.blogspot.ca/2018/04/ansible-automation-multi-environment-docker-cluster-devops.html)
+
+
+
+## Automation with Ansible(10) - Create VMs from VCenter with Multi Environment Architecture 
+
+This will create vms from inventory file by follwing multi environment architecture
+
+[Automatoin with Ansible 10](https://alexjoh.blogspot.ca/2018/04/automation-ansible-provision-create-vms-multi-environment-devops.html)
+
+
