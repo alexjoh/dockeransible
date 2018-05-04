@@ -1,4 +1,4 @@
-# dockeransible
+# Automation with Ansible for Docker Cluster and Micro Services
 
 This repository is to automate all docker related tasks using Ansible tool. This will contains all scripts for my blog for Automation with Ansible series, (https://alexjoh.blogspot.ca). 
 
